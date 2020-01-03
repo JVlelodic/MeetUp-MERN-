@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Main from './components/Main'; 
+import Taskboard from './components/Taskboard'; 
 import Home from './components/Home';
 import ContactUs from './components/ContactUs';
 import Timetable from './components/Timetable';
@@ -18,7 +18,7 @@ function App(){
 				<Route exact path = "/" component = {Home}/>
 				<Route path = "/contactus" component = {ContactUs}/>
 				<Route path = "/timetable" component = {Timetable}/>
-				<Route path = "/taskboard" component = {Main}/>
+				<Route path = "/taskboard" component = {Taskboard}/>
 			</Switch>
 		</BrowserRouter>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import initialData from './initialData';
 import Column from './Column'; 
 
-class Main extends React.Component{
+class Taskboard extends React.Component{
     state = initialData;
     
     render(){
@@ -16,4 +16,4 @@ class Main extends React.Component{
     }
 }
 
-export default Main;
+export default Taskboard;
