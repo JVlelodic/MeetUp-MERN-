@@ -8,7 +8,6 @@ const Container = styled.div`
     border : 1px solid lightgrey;
     border-radius : 2px;    
     width: 220px;
-    
     display: flex;
     flex-direction: column;
 `;
@@ -22,6 +21,24 @@ const TaskList = styled.div`
     min-height: 100px;
 `; 
 
+class InnerList extends React.Component{
+    
+    shouldComponentUpdate(nextProps){
+        if(nextProps.tasks === this.props.tasks){
+            return false;
+        }
+        return true; 
+    }
+
+    render(){
+        return (
+            this.props.tasks.map((task,index)=>(
+                <Task key={task.id} task = {task} index={index}/>
+            ))
+        );
+    }
+}
+
 export default class Column extends React.Component{
     render(){
         return (
@@ -34,7 +51,7 @@ export default class Column extends React.Component{
                          {...provided.droppableProps}
                          isDraggingOver={snapshot.isDraggingOver}
                         >
-                            {this.props.tasks.map((task,index) => <Task key ={task.id} task = {task} index={index}/>)}
+                            <InnerList tasks={this.props.tasks}></InnerList>
                             {provided.placeholder}
                         </TaskList>
                     )}
