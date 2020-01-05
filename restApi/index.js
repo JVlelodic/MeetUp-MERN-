@@ -40,6 +40,10 @@ app.get('/', (req,res) =>{
     res.send(home);
 });
 
+app.get('/taskboard',(req,res)=>{
+    res.send(data);    
+});
+
 app.get('/task/:id',(req,res)=>{
     const task = data.tasks[`task-${req.params.id}`];
     if(!task) res.status(404).send('Task was not found');
