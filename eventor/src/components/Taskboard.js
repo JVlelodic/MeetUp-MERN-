@@ -1,15 +1,29 @@
+<<<<<<< HEAD
 import React from 'react';
 import initialData from './initialData';
 import Column from './Column';
 import { DragDropContext } from 'react-beautiful-dnd';
 import styled from 'styled-components';
+=======
+import React from 'react'; 
+import Column from './Column'; 
+import {DragDropContext} from 'react-beautiful-dnd';
+import styled from 'styled-components'; 
+>>>>>>> taskboard data received from api
+
+const URL = 'http://127.0.0.1:5468'
 
 const Container = styled.div`
     display: flex; 
 `;
 
+<<<<<<< HEAD
 class Taskboard extends React.Component {
     state = initialData;
+=======
+class Taskboard extends React.Component{
+    state = null;
+>>>>>>> taskboard data received from api
 
     //Changes text when drag starts
     onDragStart = () => {
@@ -26,7 +40,23 @@ class Taskboard extends React.Component {
         // document.body.style.backgroundColor = 'rgb(199,180,142)';
     }
 
+<<<<<<< HEAD
     onDragEnd = result => {
+=======
+    async componentDidMount (){
+        
+        const options = {
+            headers: { "Content-Type": "application/json" }
+        };
+        
+        const response = await fetch(`${URL}/taskboard`,options);
+        const data = await response.json();
+        console.log(data); 
+        this.setState(data);
+    }
+    
+    onDragEnd = result =>{
+>>>>>>> taskboard data received from api
 
         //Resets text and background color to initial color when drag ends
         document.body.style.color = 'inherit';
@@ -91,6 +121,7 @@ class Taskboard extends React.Component {
 
     render() {
         return (
+<<<<<<< HEAD
             <DragDropContext
                 onDragEnd={this.onDragEnd}
                 onDragStart={this.onDragStart}
@@ -103,6 +134,28 @@ class Taskboard extends React.Component {
                         return <Column key={column.id} column={column} tasks={task}></Column>
                     })}
                 </Container>
+=======
+
+            <DragDropContext 
+            onDragEnd={this.onDragEnd}
+            onDragStart={this.onDragStart}
+            onDragUpdate={this.onDragUpdate}
+            >
+                {!this.state ? (
+                    <div>
+                        <img src='./pictures/loadingScreen.mp4' alt="Loading..."/>
+                    </div>
+                ):(
+                    <Container>
+                        {this.state.columnOrder.map(columnId=>{
+                            const column = this.state.columns[columnId];
+                            const task = column.taskIds.map((taskId) => this.state.tasks[taskId]);
+                            return <Column key = {column.id} column = {column} tasks= {task}></Column>
+                        })}
+                    </Container>
+                )}
+                
+>>>>>>> taskboard data received from api
             </DragDropContext>
         )
     }
