@@ -10,7 +10,7 @@ const data = {
         'task-1' : { id: 'task-1', content: 'fix bathroom'},
         'task-2' : { id: 'task-2', content: 'watch show'},
         'task-3' : { id: 'task-3', content: 'eat dinner'},
-        'task-4' : { id: 'task-4', content: 'punch wall'}
+        // 'task-4' : { id: 'task-4', content: 'punch wall'}
     },
     columns : {
         'column-1' :{

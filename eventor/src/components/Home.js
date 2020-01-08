@@ -17,7 +17,6 @@ class Home extends React.Component{
 
         const response = await fetch(URL,options);
         const value = await response.json(); 
-        console.log(value);
         this.setState({
             loading: false, 
             header: value.header,

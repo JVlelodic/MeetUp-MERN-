@@ -51,7 +51,6 @@ class Taskboard extends React.Component{
         
         const response = await fetch(`${URL}/taskboard`,options);
         const data = await response.json();
-        console.log(data); 
         this.setState(data);
     }
     
@@ -119,6 +118,7 @@ class Taskboard extends React.Component{
         this.setState(newState);
     }
 
+<<<<<<< HEAD
     render() {
         return (
 <<<<<<< HEAD
@@ -158,6 +158,33 @@ class Taskboard extends React.Component{
 >>>>>>> taskboard data received from api
             </DragDropContext>
         )
+=======
+    render(){
+
+        if(!this.state){
+            return (
+                <div className = "loader">
+                    <img src = './pictures/loadingScreen.mp4' alt = 'Loading...'></img>
+                </div>
+            )
+        }else{
+            return (
+                    <DragDropContext 
+                    onDragEnd={this.onDragEnd}
+                    onDragStart={this.onDragStart}
+                    onDragUpdate={this.onDragUpdate}
+                    >
+                        <Container>
+                            {this.state.columnOrder.map(columnId=>{
+                                const column = this.state.columns[columnId];
+                                const task = column.taskIds.map((taskId) => this.state.tasks[taskId]);
+                                {console.log(column)}
+                                return <Column key = {column.id} column = {column} tasks= {task}></Column>
+                            })}
+                        </Container>
+                    </DragDropContext>
+        )}
+>>>>>>> testing fetch
     }
 }
 
