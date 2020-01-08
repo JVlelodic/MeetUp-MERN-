@@ -10,17 +10,17 @@ class Header extends Component {
       <Navbar bg = "dark" variant = "dark"> 
           <Navbar.Brand><h3>MeetUp |</h3></Navbar.Brand>
           <Nav className = "mr-auto p-3">
-            <Link to = "/">
-              <Nav.Link href =  "/">Home</Nav.Link>
+            <Link to = "/" style={{ textDecoration: 'none' }}> 
+              <li className = "nav-link">Home</li> 
             </Link>
-            <Link to = "/timetable">
-              <Nav.Link href =  "/">Timetable</Nav.Link>
+            <Link to = "/timetable" style={{ textDecoration: 'none' }}> 
+              <li className = "nav-link">Timetable</li> 
             </Link>
-            <Link to = "/taskboard">
-              <Nav.Link href =  "/">TaskBoard</Nav.Link>
+            <Link to = "/taskboard" style={{ textDecoration: 'none' }}> 
+              <li className = "nav-link">Taskboard</li> 
             </Link>
-            <Link to = "/contactus">
-              <Nav.Link href =  "/">Contact Us</Nav.Link>
+            <Link to = "/contactus" style={{ textDecoration: 'none' }}> 
+              <li className = "nav-link">Contact Us</li> 
             </Link>
           </Nav>
       </Navbar>
