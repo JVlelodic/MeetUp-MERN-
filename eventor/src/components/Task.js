@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import {Draggable} from 'react-beautiful-dnd';
 
 const Container = styled.div`
+    width: 280px;
     border: 1px solid lightgrey;
-    border-radius: 2px;
-    padding: 8px;
-    margin-bottom: 8px;
-    background-color: ${props=> (props.isDragging ? 'lightgreen' : 'white')};
+    padding: 80px;
+    margin: 10px;
+    background-color: ${props=> (props.isDragging ? 'skyblue' : 'white')};
 `;
 
 export default class Task extends React.Component{
