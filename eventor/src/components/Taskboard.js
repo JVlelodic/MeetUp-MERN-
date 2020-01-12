@@ -15,15 +15,16 @@ class Taskboard extends React.Component{
     onDragStart = () =>{
         // document.body.style.color = 'orange';
         // document.body.style.transition = 'background-color 0.2 ease';
+        document.body.style.backgroundColor = 'rgb(199,180,142)';
     }
 
-    //Changing background opacity
-    // onDragUpdate = update =>{
-    //     const {destination} = update;
-    //     const opacity = 
-    //         destination ? destination.index / Object.keys(this.state.tasks).length : 0;
-    //     document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`;
-    // }
+    // Changing background opacity
+    onDragUpdate = update =>{
+        // const {destination} = update;
+        // const opacity = 
+        //     destination ? destination.index / Object.keys(this.state.tasks).length : 0;
+        // document.body.style.backgroundColor = 'rgb(199,180,142)';
+    }
     
     onDragEnd = result =>{
 
@@ -93,6 +94,7 @@ class Taskboard extends React.Component{
             <DragDropContext 
             onDragEnd={this.onDragEnd}
             onDragStart={this.onDragStart}
+            onDragUpdate={this.onDragUpdate}
             >
                 <Container>
                     {this.state.columnOrder.map(columnId=>{
