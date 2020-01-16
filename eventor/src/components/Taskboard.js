@@ -15,7 +15,7 @@ class Taskboard extends React.Component{
     onDragStart = () =>{
         // document.body.style.color = 'orange';
         // document.body.style.transition = 'background-color 0.2 ease';
-        document.body.style.backgroundColor = 'rgb(199,180,142)';
+        // document.body.style.backgroundColor = 'rgb(199,180,142)';
     }
 
     // Changing background opacity
