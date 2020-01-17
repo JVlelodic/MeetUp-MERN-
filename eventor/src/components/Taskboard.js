@@ -1,110 +1,111 @@
-import React from 'react'; 
+import React from 'react';
 import initialData from './initialData';
-import Column from './Column'; 
-import {DragDropContext} from 'react-beautiful-dnd';
-import styled from 'styled-components'; 
+import Column from './Column';
+import { DragDropContext } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
 const Container = styled.div`
     display: flex; 
 `;
 
-class Taskboard extends React.Component{
+class Taskboard extends React.Component {
     state = initialData;
 
     //Changes text when drag starts
-    onDragStart = () =>{
+    onDragStart = () => {
         // document.body.style.color = 'orange';
         // document.body.style.transition = 'background-color 0.2 ease';
         // document.body.style.backgroundColor = 'rgb(199,180,142)';
     }
 
     // Changing background opacity
-    onDragUpdate = update =>{
+    onDragUpdate = update => {
         // const {destination} = update;
         // const opacity = 
         //     destination ? destination.index / Object.keys(this.state.tasks).length : 0;
         // document.body.style.backgroundColor = 'rgb(199,180,142)';
     }
-    
-    onDragEnd = result =>{
+
+    onDragEnd = result => {
 
         //Resets text and background color to initial color when drag ends
-        document.body.style.color = 'inherit'; 
+        document.body.style.color = 'inherit';
         document.body.style.backgroundColor = 'inherit';
-        
-        const {destination,source, draggableId} = result; 
-        if(!destination) return; 
-        if(destination.droppableId === source.droppableId && 
-            destination.index === source.index) return; 
-        
+
+        const { destination, source, draggableId } = result;
+        if (!destination) return;
+        if (destination.droppableId === source.droppableId &&
+            destination.index === source.index) return;
+
         const start = this.state.columns[source.droppableId]
         const finish = this.state.columns[destination.droppableId]
 
         //If moving to same list
-        if(start === finish){
+        if (start === finish) {
             const newTaskIds = Array.from(start.taskIds);
-            newTaskIds.splice(source.index,1); 
-            newTaskIds.splice(destination.index,0,draggableId);
-            
+            newTaskIds.splice(source.index, 1);
+            newTaskIds.splice(destination.index, 0, draggableId);
+
             const newColumn = {
                 ...start,
-                taskIds : newTaskIds
+                taskIds: newTaskIds
             };
-        
+
             const newState = {
                 ...this.state,
-                columns : {
+                columns: {
                     ...this.state.columns,
-                    [newColumn.id]: newColumn, 
+                    [newColumn.id]: newColumn,
                 },
             };
             this.setState(newState);
-            return; 
+            return;
         }
 
         //Moving from one list to another
         const startTaskIds = Array.from(start.taskIds);
-        startTaskIds.splice(source.index,1);
+        startTaskIds.splice(source.index, 1);
         const newStart = {
             ...start,
-            taskIds: startTaskIds, 
+            taskIds: startTaskIds,
         };
-        
+
         const finishTaskIds = Array.from(finish.taskIds);
-        finishTaskIds.splice(destination.index,0,draggableId);
+        finishTaskIds.splice(destination.index, 0, draggableId);
         const newFinish = {
             ...finish,
             taskIds: finishTaskIds,
         };
 
-        const newState ={
+        const newState = {
             ...this.state,
-            columns:{
+            columns: {
                 ...this.state.columns,
                 [newStart.id]: newStart,
                 [newFinish.id]: newFinish,
             },
         };
-        
+
         this.setState(newState);
     }
 
-    render(){
+    render() {
         return (
-            <DragDropContext 
-            onDragEnd={this.onDragEnd}
-            onDragStart={this.onDragStart}
-            onDragUpdate={this.onDragUpdate}
+            <DragDropContext
+                onDragEnd={this.onDragEnd}
+                onDragStart={this.onDragStart}
+                onDragUpdate={this.onDragUpdate}
             >
                 <Container>
-                    {this.state.columnOrder.map(columnId=>{
+                    {this.state.columnOrder.map(columnId => {
                         const column = this.state.columns[columnId];
                         const task = column.taskIds.map((taskId) => this.state.tasks[taskId]);
-                        return <Column key = {column.id} column = {column} tasks= {task}></Column>
+                        return <Column key={column.id} column={column} tasks={task}></Column>
                     })}
                 </Container>
             </DragDropContext>
-        )}
+        )
+    }
 }
 
 export default Taskboard;

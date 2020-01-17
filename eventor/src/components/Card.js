@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Dropdown, DropdownButton} from 'react-bootstrap';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 const CardContainer = styled.div`
     width: 100%; 
@@ -35,34 +35,34 @@ const Tag = styled.div`
 `;
 
 
-const Card = (props) =>{
-  return (
-      <CardContainer>
-          <Heading className = "text-left">
-              {props.heading}
-              <DropdownButton
-              drop = "right" 
-              className = "float-right" 
-              size = "sm"
-              variant = "dark"
-              title = ""
-              >
-                  <Dropdown.Item 
-                  isSelected
-                  as="button" 
-                  onClick = {()=>{console.log("hello world")}}    
-                  >
-                      Edit
+const Card = (props) => {
+    return (
+        <CardContainer>
+            <Heading className="text-left">
+                {props.heading}
+                <DropdownButton
+                    drop="right"
+                    className="float-right"
+                    size="sm"
+                    variant="dark"
+                    title=""
+                >
+                    <Dropdown.Item
+                        isSelected
+                        as="button"
+                        onClick={() => { console.log("hello world") }}
+                    >
+                        Edit
                   </Dropdown.Item>
-                  <Dropdown.Item as="button" onClick = {props.delete}>Delete</Dropdown.Item>
-              </DropdownButton>
-          </Heading>
-          <Body>
-              <div>{props.body}</div>
-              <Tag>{props.event}</Tag>
-          </Body>
-      </CardContainer>
-  );
+                    <Dropdown.Item as="button" onClick={props.delete}>Delete</Dropdown.Item>
+                </DropdownButton>
+            </Heading>
+            <Body>
+                <div>{props.body}</div>
+                <Tag>{props.event}</Tag>
+            </Body>
+        </CardContainer>
+    );
 }
 
 export default Card; 
