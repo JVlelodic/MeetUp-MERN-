@@ -1,10 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from 'react';
 import initialData from './initialData';
 import Column from './Column';
 import { DragDropContext } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 =======
+=======
+>>>>>>> da0497f0695f7db940436dd80f1eec3db5830ee9
 import React from 'react'; 
 import Column from './Column'; 
 import {DragDropContext} from 'react-beautiful-dnd';
@@ -13,10 +16,13 @@ import styled from 'styled-components';
 
 const URL = 'http://127.0.0.1:5468'
 
+const URL = 'http://127.0.0.1:5468'
+
 const Container = styled.div`
     display: flex; 
 `;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 class Taskboard extends React.Component {
     state = initialData;
@@ -24,6 +30,10 @@ class Taskboard extends React.Component {
 class Taskboard extends React.Component{
     state = null;
 >>>>>>> taskboard data received from api
+=======
+class Taskboard extends React.Component{
+    state = null;
+>>>>>>> da0497f0695f7db940436dd80f1eec3db5830ee9
 
     //Changes text when drag starts
     onDragStart = () => {
@@ -43,6 +53,17 @@ class Taskboard extends React.Component{
 <<<<<<< HEAD
     onDragEnd = result => {
 =======
+    async componentDidMount (){
+        
+        const options = {
+            headers: { "Content-Type": "application/json" }
+        };
+        
+        const response = await fetch(`${URL}/taskboard`,options);
+        const data = await response.json();
+        this.setState(data);
+    }
+
     async componentDidMount (){
         
         const options = {
@@ -119,6 +140,7 @@ class Taskboard extends React.Component{
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     render() {
         return (
 <<<<<<< HEAD
@@ -159,6 +181,8 @@ class Taskboard extends React.Component{
             </DragDropContext>
         )
 =======
+=======
+>>>>>>> da0497f0695f7db940436dd80f1eec3db5830ee9
     render(){
 
         if(!this.state){
@@ -184,7 +208,10 @@ class Taskboard extends React.Component{
                         </Container>
                     </DragDropContext>
         )}
+<<<<<<< HEAD
 >>>>>>> testing fetch
+=======
+>>>>>>> da0497f0695f7db940436dd80f1eec3db5830ee9
     }
 }
 
