@@ -52,19 +52,30 @@ app.get('/task', (req,res)=>{
 app.post('/task', (req,res)=>{
 
     console.log(req.body);
-    console.log(req.body.id);
+		console.log(req.body.start);
+		console.log(req.body.dest); 
+		const source = req.body.start;
+		const dest = req.body.dest; 
+		const task = req.body.task;
 
-    const task ={
-        id: req.body.id,
-        content: req.body.content,
-    };
-    
-    const newTasks = {
-        ...data.tasks,
-        [task.id]: task, 
-    }
-    
-    res.send(newTasks);
+		const sourceCol = initialData.columns[source.columnId];
+		const destCol = initialData.columns[dest.columnId]; 
+		
+		if(sourceCol === destCol){
+			sourceCol.taskIds.splice(source.index,1);
+			sourceCol.taskIds.splice(dest.index,0, task);
+			console.log(initialData.columns[source.columnId]);
+		} else {
+			sourceCol.taskIds.splice(source.index,1);
+			destCol.taskIds.splice(dest.index,0, task);
+			console.log(initialData.columns[source.columnId]);
+			console.log(initialData.columns[dest.columnId]);
+		}
+
+    res.send({
+			status: "200"
+		});
+	
 });
 
 

@@ -1,5 +1,4 @@
 import React from "react";
-import initialData from "./initialData";
 import Column from "./Column";
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
@@ -11,24 +10,27 @@ const Container = styled.div`
 `;
 
 class Taskboard extends React.Component {
-  state = {
-    loading: true,
-    taskboard: null
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: true,
+      taskboard: null
+    };
+  }
 
   async componentDidMount() {
     const options = {
       headers: { "Content-Type": "application/json" }
     };
-
     const response = await fetch(`${URL}/task`, options);
     const payload = await response.json();
-    this.setState({
-        loading: false,
-      taskboard: payload
-    });    
-  }
 
+    this.setState({
+      loading: false,
+      taskboard: payload
+    });
+  }
   //Changes text when drag starts
   onDragStart = () => {
     // document.body.style.color = 'orange';
@@ -38,34 +40,50 @@ class Taskboard extends React.Component {
 
   // Changing background opacity
   onDragUpdate = update => {
-    // const {destination} = update;
+    // const {dest} = update;
     // const opacity =
-    //     destination ? destination.index / Object.keys(this.state.taskboard.tasks).length : 0;
+    //     dest ? dest.index / Object.keys(this.state.taskboard.tasks).length : 0;
     // document.body.style.backgroundColor = 'rgb(199,180,142)';
   };
 
-  onDragEnd = result => {
+  onDragEnd = async result => {
     //Resets text and background color to initial color when drag ends
     document.body.style.color = "inherit";
     document.body.style.backgroundColor = "inherit";
 
-    const { destination, source, draggableId } = result;
-    if (!destination) return;
+    const { dest, source, draggableId } = result;
+    if (!dest) return;
     if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
+      dest.droppableId === source.droppableId &&
+      dest.index === source.index
     )
       return;
 
     const start = this.state.taskboard.columns[source.droppableId];
-    const finish = this.state.taskboard.columns[destination.droppableId];
+    const finish = this.state.taskboard.columns[dest.droppableId];
+    
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        task: draggableId,
+        start: {
+          columnId: source.droppableId,
+          index: source.index,
+        },
+        dest: {
+          columnId: dest.droppableId,
+          index: dest.index,
+        }
+      }),
+    };
 
     //If moving to same list
     if (start === finish) {
       const newTaskIds = Array.from(start.taskIds);
       newTaskIds.splice(source.index, 1);
-      newTaskIds.splice(destination.index, 0, draggableId);
-
+      newTaskIds.splice(dest.index, 0, draggableId);
+      
       const newColumn = {
         ...start,
         taskIds: newTaskIds
@@ -79,6 +97,12 @@ class Taskboard extends React.Component {
         }
       };
       this.setState(newState);
+
+      
+
+      const response = await fetch(`${URL}/task`, options);
+      const status = await response.json();
+      console.log(status.status); 
       return;
     }
 
@@ -91,7 +115,7 @@ class Taskboard extends React.Component {
     };
 
     const finishTaskIds = Array.from(finish.taskIds);
-    finishTaskIds.splice(destination.index, 0, draggableId);
+    finishTaskIds.splice(dest.index, 0, draggableId);
     const newFinish = {
       ...finish,
       taskIds: finishTaskIds
