@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { deleteTask } from '../redux/actions';
 
 const CardContainer = styled.div`
     width: 100%; 
@@ -63,6 +64,18 @@ const Card = (props) => {
             </Body>
         </CardContainer>
     );
+}
+
+const mapToStateToProps = state => {
+    return {
+        
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        deleteTask: () => dispatch(deleteTask())
+    }
 }
 
 export default Card; 

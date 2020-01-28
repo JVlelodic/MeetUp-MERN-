@@ -8,7 +8,7 @@ import ContactUs from './components/ContactUs';
 import Timetable from './components/Timetable';
 import Header from './components/Header';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import store from './redux/store';
 
 function App() {
 	return (

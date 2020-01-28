@@ -1,6 +1,3 @@
-export const LOAD_TASK = "LOAD_TASK"
-export const LOAD_FAIL = "LOAD_FAIL"
-export const LOAD_SUCESS = "LOAD_SUCCESS" 
 export const MOVE_TASK = "MOVE_TASK"
 export const DELETE_TASK = "DELETE_TASK" 
 export const ADD_TASK = "ADD_TASK"
