@@ -66,16 +66,4 @@ const Card = (props) => {
     );
 }
 
-const mapToStateToProps = state => {
-    return {
-        
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        deleteTask: () => dispatch(deleteTask())
-    }
-}
-
 export default Card; 

@@ -7,13 +7,14 @@ function taskReducer(state = initialData, action) {
         case MOVE_TASK:
             const source = action.source;
             const dest = action.dest;
+            
             if (source.index === dest.index &&
                 source.dropId === dest.dropId) return state;
 
             if (source.dropId === dest.dropId) {
+                
                 const currColumn = state.columns[source.dropId];
-                const currTasks = currColumn.taskIds
-                    .map(a => ({ ...a }));
+                const currTasks = Array.from(currColumn.taskIds); 
                 currTasks.splice(source.index, 1);
                 currTasks.splice(dest.index, 0, action.dragId);
 
@@ -31,16 +32,14 @@ function taskReducer(state = initialData, action) {
                 }
             }
 
-            const srcTaskIds = state.columns[source.dropId].taskIds
-                .map(task => ({...task}));
+            const srcTaskIds = Array.from(state.columns[source.dropId].taskIds); 
                 srcTaskIds.splice(source.index, 1); 
                 const newStart = {
                     ...state.columns[source.dropId],
                     taskIds: srcTaskIds, 
                 }
             
-            const destTaskIds = state.columns[dest.dropId].taskIds
-                .map(task => ({...task})); 
+            const destTaskIds = Array.from(state.columns[dest.dropId].taskIds);
                 destTaskIds.splice(dest.index, 0, action.dragId);
                 const newDest = {
                     ...state.columns[dest.dropId],

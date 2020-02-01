@@ -2,7 +2,6 @@ import React from "react";
 import Column from "./Column";
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { moveTask } from "../redux/actions";
 
@@ -14,6 +13,7 @@ class Taskboard extends React.Component {
   // state = initialData;
   constructor(props) {
     super(props);
+    this.onDragEnd = this.onDragEnd.bind(this);
   }
 
   //Changes text when drag starts
@@ -34,15 +34,12 @@ class Taskboard extends React.Component {
   onDragEnd = result => {
     document.body.style.color = "inherit";
     document.body.style.backgroundColor = "inherit";
-    const { destination, source, draggableId } = result;
-    console.log();
-    moveTask(
-      draggableId,
-      source.index,
-      source.droppableId,
-      destination.index,
-      destination.droppableId
-    );
+    const { source, destination, draggableId } = result;
+
+    if (!destination) return;
+
+    this.props.dragTask(source, destination, draggableId);
+    return;
   };
 
   render() {
@@ -76,8 +73,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    moveTask: (dragId, srcIndex, srcDropId, destIndex, destDropId) =>
-      dispatch(moveTask(dragId, srcIndex, srcDropId, destIndex, destDropId))
+    dragTask: (source, destination, draggableId) =>
+      dispatch(moveTask(source, destination, draggableId))
   };
 };
 

@@ -1,22 +1,16 @@
 import { MOVE_TASK, DELETE_TASK } from "./actionTypes";
 
-export const moveTask = (
-  draggableId,
-  srcIndex,
-  srcDropId,
-  destIndex,
-  destDropId
-) => {
+export const moveTask = (source, destination, draggableId) => {
   return {
     type: MOVE_TASK,
     dragId: draggableId,
     source: {
-      index: srcIndex,
-      dropId: srcDropId
+      index: source.index,
+      dropId: source.droppableId
     },
     dest: {
-      index: destIndex,
-      dropId: destDropId
+      index: destination.index,
+      dropId: destination.droppableId
     }
   };
 };
