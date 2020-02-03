@@ -39,7 +39,7 @@ function taskReducer(state = initialData, action) {
                     taskIds: srcTaskIds, 
                 }
             
-            const destTaskIds = Array.from(state.columns[dest.dropId].taskIds);
+            const destTaskIds = Array.from(state.columns[dest.dropId].taskIds); 
                 destTaskIds.splice(dest.index, 0, action.dragId);
                 const newDest = {
                     ...state.columns[dest.dropId],
@@ -56,6 +56,7 @@ function taskReducer(state = initialData, action) {
             }
 
         case DELETE_TASK:
+            
             const newTaskList = Array.from(state.columns[action.column].taskIds);
             newTaskList.splice(action.index,1);
             

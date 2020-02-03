@@ -25,4 +25,4 @@ const initialData = {
 	columnOrder: ['column-1', 'column-2', 'column-3'],
 }
 
-module.exports = initialData; 
+export default initialData; 
