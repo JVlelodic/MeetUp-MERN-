@@ -4,6 +4,16 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
 import { deleteTask } from "../redux/actions";
 import { connect } from "react-redux";
 
+const Body = styled.div`
+  height: 132px;
+  margin: 5px;
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 5px;
+  background-color: lightgray;
+  position: relative;
+`;
+
 const CardContainer = styled.div`
   width: 100%;
   height: 175px;
@@ -13,16 +23,6 @@ const Heading = styled.h5`
   height: 30px;
   padding: 10px;
   padding-top: 5px;
-`;
-
-const Body = styled.div`
-  height: 132px;
-  margin: 5px;
-  text-align: left;
-  padding-left: 10px;
-  padding-top: 5px;
-  background-color: lightgray;
-  position: relative;
 `;
 
 const Tag = styled.div`
@@ -36,15 +36,17 @@ const Tag = styled.div`
   bottom: 5%;
 `;
 
-const URL = "localhost:3000/home"
+const Title = styled.a`
+  color: inherit;
+`;
+
+const URL = "localhost:3000/home";
 
 const Card = props => {
   return (
     <CardContainer>
-      <Heading 
-
-      className="text-left">
-        <a href="">{props.heading}</a>
+      <Heading className="text-left">
+        <Title href={`tasks/${props.id}`}>{props.heading}</Title>
         <DropdownButton
           drop="right"
           className="float-right"

@@ -45,6 +45,7 @@ class Task extends React.Component {
                 isDragging={snapshot.isDragging}
               >
                 <Card
+                  id={this.props.task.id}
                   taskIndex={this.props.index}
                   columnId={this.props.columnId}
                   onClick={this.onClick}

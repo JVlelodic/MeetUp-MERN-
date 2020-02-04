@@ -9,6 +9,7 @@ import Timetable from './components/Timetable';
 import Header from './components/Header';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import Ticket from './components/Tmp';
 
 function App() {
 	return (
@@ -20,7 +21,8 @@ function App() {
 						<Route exact path="/" component={Home} />
 						<Route path="/contactus" component={ContactUs} />
 						<Route path="/timetable" component={Timetable} />
-						<Route path="/taskboard" component={Taskboard} />
+						<Route exact path="/tasks" component={Taskboard} />
+						<Route path='/tasks/' component={Ticket}/>
 					</Switch>
 				</BrowserRouter>
 			</Provider>

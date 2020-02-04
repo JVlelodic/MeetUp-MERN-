@@ -16,7 +16,7 @@ class Header extends Component {
 					<Link to="/timetable" style={{ textDecoration: 'none' }}>
 						<li className="nav-link">Timetable</li>
 					</Link>
-					<Link to="/taskboard" style={{ textDecoration: 'none' }}>
+					<Link to="/tasks" style={{ textDecoration: 'none' }}>
 						<li className="nav-link">Taskboard</li>
 					</Link>
 					<Link to="/contactus" style={{ textDecoration: 'none' }}>
