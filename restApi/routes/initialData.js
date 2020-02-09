@@ -1,4 +1,4 @@
-const initialData = {
+module.exports = {
 	tasks: {
 		'task-1': { id: 'task-1', content: 'fix bathroom', event: 'General Fix' },
 		'task-2': { id: 'task-2', content: 'watch show', event: 'Entertainment' },
@@ -25,4 +25,3 @@ const initialData = {
 	columnOrder: ['column-1', 'column-2', 'column-3'],
 }
 
-export default initialData; 

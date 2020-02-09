@@ -40,13 +40,11 @@ const Title = styled.a`
   color: inherit;
 `;
 
-const URL = "localhost:3000/home";
-
 const Card = props => {
   return (
     <CardContainer>
       <Heading className="text-left">
-        <Title href={`tasks/${props.id}`}>{props.heading}</Title>
+        <Title href={`tasks/${props.id}`} target="_blank">{props.heading}</Title>
         <DropdownButton
           drop="right"
           className="float-right"
@@ -55,7 +53,6 @@ const Card = props => {
           title=""
         >
           <Dropdown.Item
-            isSelected
             as="button"
             onClick={() => {
               console.log("hello world");

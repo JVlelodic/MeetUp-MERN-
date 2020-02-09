@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component }from 'react';
 
 const URL = 'http://127.0.0.1:5468'
-class Home extends React.Component{
+class Home extends Component{
 
     state = {
         loading: true, 
