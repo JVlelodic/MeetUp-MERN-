@@ -1,4 +1,26 @@
-import { MOVE_TASK, DELETE_TASK } from "./actionTypes";
+import { MOVE_TASK, DELETE_TASK, LOAD_TASK, GET_TASK } from "./actionTypes";
+
+const URL = "localhost:5468/tasks";
+
+export const loadTask = (data) => {
+  return {
+    type: LOAD_TASK,
+    data
+  }
+}
+
+export const getTask = () => {
+  return function (dispatch) {
+    return fetch(URL)
+    .then(
+      response => response.json(),
+      error => console.log(`${error} has occurred`)
+    )
+    .then(
+      json => dispatch(loadTask(json))
+    );
+  }
+};
 
 export const moveTask = (source, destination, draggableId) => {
   return {

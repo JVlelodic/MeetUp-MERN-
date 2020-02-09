@@ -3,7 +3,7 @@ import Column from "./Column";
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { moveTask } from "../redux/actions";
+import { moveTask, getTask } from "../redux/actions";
 
 const Container = styled.div`
   display: flex;
@@ -15,7 +15,11 @@ class Taskboard extends React.Component {
     super(props);
     this.onDragEnd = this.onDragEnd.bind(this);
   }
-
+  
+  componentDidMount () {
+    
+  }
+  
   //Changes text when drag starts
   onDragStart = () => {
     // document.body.style.color = 'orange';
@@ -73,6 +77,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadState: () => dispatch(getTask()),
     dragTask: (source, destination, draggableId) =>
       dispatch(moveTask(source, destination, draggableId))
   };
