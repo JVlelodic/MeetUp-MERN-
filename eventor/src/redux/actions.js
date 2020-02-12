@@ -1,8 +1,13 @@
 import { MOVE_TASK, DELETE_TASK } from "./actionTypes";
+import axios from "axios";
 
 const updateApiTask = () => {
-  return function (dispatc)
-}
+  return function(dispatch) {
+    axios({
+      url: 'http://localhost/tasks'
+    });
+  };
+};
 
 export const moveTask = (source, destination, draggableId) => {
   return {
