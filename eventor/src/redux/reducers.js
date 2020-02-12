@@ -1,21 +1,15 @@
 // import { MOVE_TASK } from "./actions";
 import initialData from "../components/initialData";
-import { MOVE_TASK, DELETE_TASK, LOAD_TASK } from "./actionTypes";
+import { MOVE_TASK, DELETE_TASK } from "./actionTypes";
 
 function taskReducer(state = initialData, action) {
   switch (action.type) {
-    case LOAD_TASK:
-      const initialState = action.data;
-      return {
-        initialState
-      };
-
     case MOVE_TASK:
       const source = action.source;
       const dest = action.dest;
 
-      if (source.index === dest.index && source.dropId === dest.dropId)
-        return state;
+    //   if (source.index === dest.index && source.dropId === dest.dropId)
+    //     return state;
 
       if (source.dropId === dest.dropId) {
         const currColumn = state.columns[source.dropId];

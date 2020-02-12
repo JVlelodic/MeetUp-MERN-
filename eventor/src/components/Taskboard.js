@@ -15,7 +15,7 @@ class Taskboard extends React.Component {
     super(props);
     this.onDragEnd = this.onDragEnd.bind(this);
   }
-    
+
   //Changes text when drag starts
   onDragStart = () => {
     // document.body.style.color = 'orange';
@@ -36,7 +36,13 @@ class Taskboard extends React.Component {
     document.body.style.backgroundColor = "inherit";
     const { source, destination, draggableId } = result;
 
-    if (!destination) return;
+    if (
+      !destination ||
+      (source.index === destination.index &&
+        source.droppableId === destination.droppableId)
+    ) {
+      return;
+    }
 
     this.props.dragTask(source, destination, draggableId);
     return;
