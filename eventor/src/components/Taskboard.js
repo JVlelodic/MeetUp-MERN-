@@ -17,7 +17,7 @@ class Taskboard extends React.Component {
   }
   
   componentDidMount () {
-    
+    this.props.loadState();
   }
   
   //Changes text when drag starts

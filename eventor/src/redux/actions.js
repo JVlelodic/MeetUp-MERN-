@@ -1,4 +1,4 @@
-import { MOVE_TASK, DELETE_TASK, LOAD_TASK, GET_TASK } from "./actionTypes";
+import { MOVE_TASK, DELETE_TASK, LOAD_TASK } from "./actionTypes";
 
 const URL = "localhost:5468/tasks";
 
