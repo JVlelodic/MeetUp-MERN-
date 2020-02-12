@@ -9,7 +9,7 @@ import Timetable from './components/Timetable';
 import Header from './components/Header';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import Ticket from './components/Tmp';
+import Ticket from './components/Ticket';
 
 function App() {
 	return (
