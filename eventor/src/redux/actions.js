@@ -25,9 +25,9 @@ export const moveTask = (source, destination, draggableId) => {
         }
       }
     })
-      .then(response => response.json)
-      .then(json => {
-        dispatch(fetchSuccess(json));
+      .then(response => response.data)
+      .then(payload => {
+        dispatch(fetchSuccess(payload));
       });
   };
 };
