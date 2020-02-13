@@ -1,29 +1,47 @@
-import { MOVE_TASK, DELETE_TASK, LOAD_TASK } from "./actionTypes";
-import axios from 'axios';
+import {
+  DELETE_TASK,
+  TASKPOST_SUCCESS,
+  TASKPOST_REQUEST
+} from "./actionTypes";
+import axios from "axios";
 
 const URL = "http://localhost:5468/tasks";
 
-export const postTaskUpdate = (data) => {
-  return function (dispatch) {
-    axios({
-      url: URL,
-      
-    })
-  }
-}
-
 export const moveTask = (source, destination, draggableId) => {
+  return function(dispatch) {
+    dispatch(fetchingTask());
+    return axios({
+      method: "post",
+      url: URL,
+      data: {
+        taskId: draggableId,
+        source: {
+          index: source.index,
+          dropId: source.droppableId
+        },
+        dest: {
+          index: destination.index,
+          dropId: destination.droppableId
+        }
+      }
+    })
+      .then(response => response.json)
+      .then(json => {
+        dispatch(fetchSuccess(json));
+      });
+  };
+};
+
+export const fetchingTask = () => {
   return {
-    type: MOVE_TASK,
-    dragId: draggableId,
-    source: {
-      index: source.index,
-      dropId: source.droppableId
-    },
-    dest: {
-      index: destination.index,
-      dropId: destination.droppableId
-    }
+    type: TASKPOST_REQUEST
+  };
+};
+
+export const fetchSuccess = newState => {
+  return {
+    type: TASKPOST_SUCCESS,
+    state: newState
   };
 };
 

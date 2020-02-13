@@ -1,3 +1,5 @@
-export const MOVE_TASK = "MOVE_TASK"
 export const DELETE_TASK = "DELETE_TASK" 
 export const ADD_TASK = "ADD_TASK"
+export const TASKPOST_REQUEST = "TASKPOST_REQUEST" 
+export const TASKPOST_SUCCESS = "TASKPOST_SUCCESS"
+export const TASKPOST_FAIL = "TASKPOST_FAIL"  

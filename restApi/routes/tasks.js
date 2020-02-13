@@ -11,6 +11,10 @@ router.post("/", (req, res) => {
   const dest = req.body.dest;
   const task = req.body.taskId;
 
+  console.log(source);
+  console.log(dest);
+  console.log(task); 
+
   if (source.dropId === dest.dropId) {
     const currColumn = data.columns[source.dropId];
     const currTasks = Array.from(currColumn.taskIds);
@@ -43,7 +47,10 @@ router.post("/", (req, res) => {
       ...data.columns[dest.dropId],
       taskIds: destTaskIds
     };
-
+    
+    console.log(newDest);
+    console.log(newStart); 
+    
     res.send({
       ...data,
       columns: {
@@ -52,6 +59,7 @@ router.post("/", (req, res) => {
         [dest.dropId]: newDest
       }
     });
+    
   }
 });
 
