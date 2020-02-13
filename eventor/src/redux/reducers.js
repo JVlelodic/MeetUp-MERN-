@@ -1,10 +1,10 @@
 // import { MOVE_TASK } from "./actions";
 import initialData from "../components/initialData";
-import { DELETE_TASK, TASKPOST_SUCCESS, TASKPOST_REQUEST } from "./actionTypes";
+import { DELETE_TASK, FETCH_REQUEST, FETCH_SUCCESS } from "./actionTypes";
 
 function taskReducer(state = initialData, action) {
   switch (action.type) { 
-    case TASKPOST_REQUEST:
+    case FETCH_REQUEST:
       return state; 
     case DELETE_TASK:
       const newTaskList = Array.from(state.columns[action.column].taskIds);
@@ -22,7 +22,7 @@ function taskReducer(state = initialData, action) {
           [action.column]: newColumn
         }
       };
-    case TASKPOST_SUCCESS: 
+    case FETCH_SUCCESS: 
       console.log(action.state); 
       return action.state; 
     default:

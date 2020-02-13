@@ -1,11 +1,22 @@
-import {
-  DELETE_TASK,
-  TASKPOST_SUCCESS,
-  TASKPOST_REQUEST
-} from "./actionTypes";
+import { DELETE_TASK, FETCH_REQUEST, FETCH_SUCCESS } from "./actionTypes";
 import axios from "axios";
 
 const URL = "http://localhost:5468/tasks";
+
+export const getTasks = () => {
+  return function(dispatch) {
+    dispatch(fetchingTask());
+    return axios({
+      method: "get",
+      url: URL
+    })
+      .then(response => response.data)
+      .then(payload => {
+        console.log(payload);
+        dispatch(fetchSuccess(payload));
+      });
+  };
+};
 
 export const moveTask = (source, destination, draggableId) => {
   return function(dispatch) {
@@ -34,13 +45,13 @@ export const moveTask = (source, destination, draggableId) => {
 
 export const fetchingTask = () => {
   return {
-    type: TASKPOST_REQUEST
+    type: FETCH_REQUEST
   };
 };
 
 export const fetchSuccess = newState => {
   return {
-    type: TASKPOST_SUCCESS,
+    type: FETCH_SUCCESS,
     state: newState
   };
 };
