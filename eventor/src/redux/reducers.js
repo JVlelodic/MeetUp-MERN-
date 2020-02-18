@@ -23,8 +23,24 @@ function taskReducer(state = initialData, action) {
         }
       };
     case FETCH_SUCCESS: 
-      console.log(action.state); 
-      return action.state; 
+      const currState = action.state; 
+      
+      const newTasks = {}; 
+      currState.tasks.forEach(task => {
+        newTasks[task.id] = task; 
+      }); 
+      
+      const newColumns = {};
+      currState.columns.forEach(column => {
+        newColumns[column.id] = column; 
+      }); 
+            
+      return {
+        tasks: newTasks,
+        columns: newColumns, 
+        columnOrder: currState.columnOrder
+      }; 
+
     default:
       return state;
   }

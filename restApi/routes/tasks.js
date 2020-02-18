@@ -9,14 +9,25 @@ const TASK = "tasks";
 const COLUMN = "columns"; 
 
 router.get("/", (req, res) => {
-  MongoClient.connect(URL, (error, client) => {
+  MongoClient.connect(URL, async (error, client) => {
     const tasksCol = client.db(MONGONAME).collection(TASK);
     const columnCol = client.db(MONGONAME).collection(COLUMN); 
     
-    console.log()
+    const tasks = await tasksCol.find().toArray();
+    const columns = await columnCol.find().toArray();  
+    const columnOrder = [];
+    
+    columns.forEach(column => columnOrder.push(column.id));
+    
+    state = {
+      tasks,
+      columns, 
+      columnOrder
+    }
+    
+    res.send(state); 
     client.close(); 
   });
-  res.send(data);
 });
 
 router.post("/", (req, res) => {

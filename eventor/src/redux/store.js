@@ -3,5 +3,4 @@ import thunk from "redux-thunk";
 import taskReducer from "./reducers";
 
 const store = createStore(taskReducer, applyMiddleware(thunk));
-console.log(store.getState());
 export default store;

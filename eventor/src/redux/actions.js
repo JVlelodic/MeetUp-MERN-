@@ -12,7 +12,6 @@ export const getTasks = () => {
     })
       .then(response => response.data)
       .then(payload => {
-        console.log(payload);
         dispatch(fetchSuccess(payload));
       });
   };
