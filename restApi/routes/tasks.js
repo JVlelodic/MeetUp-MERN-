@@ -1,8 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const data = require("./initialData");
+// const data = require("./initialData");
+
+const MongoClient = require("mongodb").MongoClient;
+const URL = "mongodb://localhost:27017";
+const MONGONAME = "Meetup";
+const TASK = "tasks";
+const COLUMN = "columns"; 
 
 router.get("/", (req, res) => {
+  MongoClient.connect(URL, (error, client) => {
+    const tasksCol = client.db(MONGONAME).collection(TASK);
+    const columnCol = client.db(MONGONAME).collection(COLUMN); 
+    
+    console.log()
+    client.close(); 
+  });
   res.send(data);
 });
 
@@ -13,7 +26,7 @@ router.post("/", (req, res) => {
 
   console.log(source);
   console.log(dest);
-  console.log(task); 
+  console.log(task);
 
   if (source.dropId === dest.dropId) {
     const currColumn = data.columns[source.dropId];
@@ -47,10 +60,10 @@ router.post("/", (req, res) => {
       ...data.columns[dest.dropId],
       taskIds: destTaskIds
     };
-    
+
     console.log(newDest);
-    console.log(newStart); 
-    
+    console.log(newStart);
+
     res.send({
       ...data,
       columns: {
@@ -59,7 +72,6 @@ router.post("/", (req, res) => {
         [dest.dropId]: newDest
       }
     });
-    
   }
 });
 

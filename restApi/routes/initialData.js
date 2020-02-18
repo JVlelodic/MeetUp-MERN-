@@ -24,4 +24,3 @@ module.exports = {
 	},
 	columnOrder: ['column-1', 'column-2', 'column-3'],
 }
-
