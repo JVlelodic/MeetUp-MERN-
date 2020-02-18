@@ -4,29 +4,19 @@ const router = express.Router();
 
 const MongoClient = require("mongodb").MongoClient;
 const URL = "mongodb://localhost:27017";
-const MONGONAME = "Meetup";
+const DB = "Meetup";
 const TASK = "tasks";
-const COLUMN = "columns"; 
+const COLUMN = "columns";
 
 router.get("/", (req, res) => {
   MongoClient.connect(URL, async (error, client) => {
-    const tasksCol = client.db(MONGONAME).collection(TASK);
-    const columnCol = client.db(MONGONAME).collection(COLUMN); 
-    
-    const tasks = await tasksCol.find().toArray();
-    const columns = await columnCol.find().toArray();  
-    const columnOrder = [];
-    
-    columns.forEach(column => columnOrder.push(column.id));
-    
-    state = {
-      tasks,
-      columns, 
-      columnOrder
-    }
-    
-    res.send(state); 
-    client.close(); 
+    const tasksCol = client.db(DB).collection(TASK);
+    const columnCol = client.db(DB).collection(COLUMN);
+
+    const state = await getCurrState(tasksCol, columnCol);
+
+    res.send(state);
+    client.close();
   });
 });
 
@@ -39,56 +29,76 @@ router.post("/", (req, res) => {
   console.log(dest);
   console.log(task);
 
-  if (source.dropId === dest.dropId) {
-    const currColumn = data.columns[source.dropId];
-    const currTasks = Array.from(currColumn.taskIds);
-    currTasks.splice(source.index, 1);
-    currTasks.splice(dest.index, 0, task);
+  MongoClient.connect(URL, async (error, client) => {
+    const tasksCol = client.db(DB).collection(TASK);
+    const columnCol = client.db(DB).collection(COLUMN);
 
-    const newColumn = {
-      ...currColumn,
-      taskIds: currTasks
-    };
+    if (source.dropId === dest.dropId) {
+      const currTasks = await getTaskIds(columnCol, source.dropId);
 
-    res.send({
-      ...data,
-      columns: {
-        ...data.columns,
-        [source.dropId]: newColumn
-      }
-    });
-  } else {
-    const srcTaskIds = Array.from(data.columns[source.dropId].taskIds);
-    srcTaskIds.splice(source.index, 1);
-    const newStart = {
-      ...data.columns[source.dropId],
-      taskIds: srcTaskIds
-    };
+      currTasks.splice(source.index, 1);
+      currTasks.splice(dest.index, 0, task);
 
-    const destTaskIds = Array.from(data.columns[dest.dropId].taskIds);
-    destTaskIds.splice(dest.index, 0, task);
-    const newDest = {
-      ...data.columns[dest.dropId],
-      taskIds: destTaskIds
-    };
+      await updateTaskids(columnCol, source.dropId, currTasks);
+    } else {
+      const srcTaskIds = await getTaskIds(columnCol, source.dropId);
+      srcTaskIds.splice(source.index, 1);
+      await updateTaskids(columnCol, source.dropId, srcTaskIds);
 
-    console.log(newDest);
-    console.log(newStart);
+      const destTaskIds = await getTaskIds(columnCol, dest.dropId);
+      destTaskIds.splice(dest.index, 0, task);
+      await updateTaskids(columnCol, dest.dropId, destTaskIds);
+    }
 
-    res.send({
-      ...data,
-      columns: {
-        ...data.columns,
-        [source.dropId]: newStart,
-        [dest.dropId]: newDest
-      }
-    });
-  }
+    const state = await getCurrState(tasksCol, columnCol);
+    res.send(state);
+    client.close();
+  });
 });
 
 router.get("/:id", (req, res) => {
   const task = data.tasks[`${req.params.id}`] || "Task was not found";
   res.send(task);
 });
+
+async function getCurrState(tasksCol, columnCol) {
+  const tasks = await tasksCol.find().toArray();
+  const columns = await columnCol.find().toArray();
+  const columnOrder = [];
+  columns.forEach(column => columnOrder.push(column.id));
+
+  state = {
+    tasks,
+    columns,
+    columnOrder
+  };
+
+  return state;
+}
+
+async function getTaskIds(columnCol, columnId) {
+  try {
+    const column = await columnCol.findOne({ id: columnId });
+    return column.taskIds;
+  } catch (error) {
+    console.log("Failed. Error: ", error);
+  }
+}
+
+async function updateTaskids(columnCol, columnId, tasks) {
+  try {
+    await columnCol.updateOne(
+      { id: columnId },
+      {
+        $set: {
+          taskIds: tasks
+        }
+      }
+    );
+    return;
+  } catch (error) {
+    console.log("Failed. Error: ", error);
+  }
+}
 
 module.exports = router;
