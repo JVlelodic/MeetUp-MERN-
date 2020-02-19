@@ -24,10 +24,6 @@ router.post("/", (req, res) => {
   const dest = req.body.dest;
   const task = req.body.taskId;
 
-  console.log(source);
-  console.log(dest);
-  console.log(task);
-
   MongoClient.connect(URL, async (error, client) => {
     const tasksCol = client.db(DB).collection(TASK);
     const columnCol = client.db(DB).collection(COLUMN);
@@ -59,16 +55,30 @@ router.get("/:id", (req, res) => {
   MongoClient.connect(URL, async (error, client) => {
     const taskCol = client.db(DB).collection(TASK);
     const response = await taskCol.findOne({ id: req.params.id });
-    const task = (await response) || {
+    
+    const task = response || {
       id: "Error",
       content: "This task does not exist",
       event: null
     };
-    console.log(task);
+
     res.send(task);
     client.close();
   });
 });
+
+router.delete("/", (req, res) => {
+  MongoClient.connect(URL, async (error, client) => {
+
+    const columnCol = client.db(DB).collection(COLUMN);
+    const taskCol = client.db(DB).collection(TASK);
+    
+    await taskCol.deleteOne({ id: req.params.id });
+    const state = await getCurrState(taskCol, columnCol)
+    res.send(state);
+    client.close();
+  });
+})
 
 async function getCurrState(tasksCol, columnCol) {
   const tasks = await tasksCol.find().toArray();
