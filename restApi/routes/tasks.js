@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const data = require("./initialData");
 
 const MongoClient = require("mongodb").MongoClient;
 const URL = "mongodb://localhost:27017";
@@ -57,8 +56,18 @@ router.post("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  const task = data.tasks[`${req.params.id}`] || "Task was not found";
-  res.send(task);
+  MongoClient.connect(URL, async (error, client) => {
+    const taskCol = client.db(DB).collection(TASK);
+    const response = await taskCol.findOne({ id: req.params.id });
+    const task = (await response) || {
+      id: "Error",
+      content: "This task does not exist",
+      event: null
+    };
+    console.log(task);
+    res.send(task);
+    client.close();
+  });
 });
 
 async function getCurrState(tasksCol, columnCol) {
