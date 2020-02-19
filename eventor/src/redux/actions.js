@@ -1,4 +1,4 @@
-import { DELETE_TASK, FETCH_REQUEST, FETCH_SUCCESS } from "./actionTypes";
+import {FETCH_REQUEST, FETCH_SUCCESS } from "./actionTypes";
 import axios from "axios";
 
 const URL = "http://localhost:5468/tasks";
@@ -55,10 +55,17 @@ export const fetchSuccess = newState => {
   };
 };
 
-export const deleteTask = (taskIndex, droppableId) => {
-  return {
-    type: DELETE_TASK,
-    index: taskIndex,
-    column: droppableId
+export const deleteTask = (taskId, droppableId) => {
+  return function(dispatch) {
+    dispatch(fetchingTask());
+    return axios
+      .delete(URL, {
+        data: {
+          id: taskId,
+          column: droppableId
+        }
+      })
+      .then(response => response.data)
+      .then(payload => fetchSuccess(payload));
   };
 };

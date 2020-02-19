@@ -69,11 +69,17 @@ router.get("/:id", (req, res) => {
 
 router.delete("/", (req, res) => {
   MongoClient.connect(URL, async (error, client) => {
-
+    
     const columnCol = client.db(DB).collection(COLUMN);
     const taskCol = client.db(DB).collection(TASK);
     
-    await taskCol.deleteOne({ id: req.params.id });
+    await taskCol.deleteOne({ id: req.body.id });
+
+    const columnTasks = await columnCol.findOne({id: req.body.column}).taskIds;
+    columnTasks = columnTasks.filter(task => task.id !== req.body.id);
+    
+    await updateTaskids(columnCol, req.body.column, tasks)
+    
     const state = await getCurrState(taskCol, columnCol)
     res.send(state);
     client.close();

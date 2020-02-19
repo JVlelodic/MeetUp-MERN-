@@ -63,7 +63,7 @@ const Card = props => {
           <Dropdown.Item
             as="button"
             onClick={() => {
-              props.remove(props.taskIndex, props.columnId);
+              props.remove(props.id, props.columnId);
             }}
           >
             Delete
